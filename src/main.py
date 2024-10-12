@@ -1,18 +1,31 @@
 import pygame
 from circle import Circle
+from time import time
 
 pygame.init()
-screen = pygame.display.set_mode((1024, 768))
+screen = pygame.display.set_mode((640, 480))
 pygame.display.set_caption("Fisica")
 clock = pygame.time.Clock()
 
 
 circle = Circle(screen.get_size())
 
+
+prev = time()
+dt = 0
+FPS = 0
+
 running = True
 mousePressed = False
 
 while running:
+    clock.tick()
+
+    now = time()
+    dt = now - prev
+    prev = now
+
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -23,21 +36,12 @@ while running:
                 running = False
         # elif event.type == pygame.MOUSEBUTTONUP:
         #     mousePressed = False
-    
-
-
-
-    
-
 
 
     screen.fill('white')
-    circle.update(screen)    
-    
-
+    circle.update(screen, dt)
 
     pygame.display.update()
-    clock.tick(60)
 
 
 pygame.quit()
